@@ -1,7 +1,7 @@
 # VS Code Only, GPT-4.1
 
 - Create a new branch locally - "demo-changes" - prompt:
-```if not already existing, create a new local branch "demo-changes" and checkout into it, carry over changes to that branch - use the CLI```
+```if not already existing, create a new local branch "demo-changes" and checkout into it, push it to remote origin, don't touch uncommitted changes - use the CLI```
 
 - In Chat top right, Click the Settings icon ("Cog") and Select "Generate Instructions"
 
