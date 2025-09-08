@@ -1,0 +1,31 @@
+{
+	"servers": {
+		"playwright": {
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			]
+		},
+		"superheroes-mcp": {
+           "command": "node",
+           "args": [
+               "${workspaceFolder}/mcp/build/index.js"
+           ]
+       },
+	   "github": {
+      		"type": "http",
+      		"url": "https://api.githubcopilot.com/mcp/"
+    	},
+		"promptboost": {
+			"url": "https://promptboost.dev/mcp",
+			"type": "http"
+		},
+		"context7": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@upstash/context7-mcp@latest"
+			]
+		}
+	}
+}
