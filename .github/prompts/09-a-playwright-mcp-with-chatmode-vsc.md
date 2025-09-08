@@ -19,7 +19,8 @@ Review the chatmode Playwright prompt:
 - Note the **instructions**
 
 
-Then use Playwright-Tester mode (with Sonnet 4):
+1. Open chat in **NEW WINDOW** (parallel session)
+2. Then use Playwright-Tester mode (with Sonnet 4):
 ```
 Using Playwright MCP - explore the web app already running on localhost port 3001, check how we can improve the existing tests and write your suggested improvement plan.
 Then implement just ONE improvement or new test, run all tests, fix until all pass reliably.
