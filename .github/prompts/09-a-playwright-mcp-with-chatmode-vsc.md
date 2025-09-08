@@ -21,9 +21,10 @@ Review the chatmode Playwright prompt:
 
 Then use Playwright-Tester mode (with Sonnet 4):
 ```
-Explore the web app, check how we can improve the existing tests, document them, run the tests, fix until all pass reliably.
-To run them - navigate into the /frontend folder, and run using this command: "npx playwright test --reporter=line"
-Assume frontend server is already running!
+Using Playwright MCP - explore the web app already running on localhost port 3001, check how we can improve the existing tests and write your suggested improvement plan.
+Then implement just ONE improvement or new test, run all tests, fix until all pass reliably.
+To run tests - navigate into the /frontend folder, and run using this command: "npx playwright test --reporter=line"
+Assume frontend server is already running on port localhost 3001!
 ```
 
 NOTE: In non-VS Code IDEs, we can still achieve the same with the MCP and use as a prompt instead of using the chat mode

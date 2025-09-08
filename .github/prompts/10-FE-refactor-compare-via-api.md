@@ -34,7 +34,8 @@ It returns the comparison result in the following format:
 Clean up all redundant code, dependencies and comments following the refactor!
 
 Stop condition: 
-Run all e2e Playwrite tests to ensure the comparison feature works as expected.
+Run all e2e Playwrite tests to ensure the comparison feature works as expected using this command:
+npx playwright test --reporter=line
 
 ---
 Let's run a quick check ourselves in our Simple Browser:
