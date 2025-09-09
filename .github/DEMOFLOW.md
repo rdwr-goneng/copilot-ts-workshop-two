@@ -3,38 +3,24 @@
 ```mermaid
 flowchart TD
 	A[01 Project Walkthrough] --> B[02 Instructions]
-	B --> C[03 Customize Instructions]
-	C --> D[04 Build MCP]
-	D --> E[05 Git Commit Messages]
-	E --> F[06 Git MCP]
-	F --> G[07 Coding Agent]
-	G --> H[08 QA Playwright Tests]
-	H --> I[09 QA Playwright MCP + Chat Mode]
-	I --> J[10 BE - Refactor with Agent]
-	J --> K[10 FE - Refactor with Agent]
-	K --> L[11 Prompts]
-	L --> M[12 Code Review in VS Code]
-	M --> N[13 Review & Refactor via Prompt]
-	N --> O[14 Using Vision]
-	O --> P[15 More Chat Modes]
-	P --> Q[Questions?]
+	B --> C[03 Prompts]
+	C --> D[04 Chat Modes]
+	D --> E[05 Code Review in VS Code]
+	E --> F[06 Review & Refactor via Prompt]
+	F --> G[07 QA Playwright Tests]
+	G --> H[08 QA Playwright MCP + Chat Mode]
+	H --> I[09 Using Vision]
+	I --> J[Questions?]
 ```
-- [ ] **01 - Project Walkthrouhg**: Quick walkthrough of the project using Copilot + Running the FE/BE
-- [ ] **02 - Instructions**: Generate copilot instructions for this project - using Copilot
-- [ ] **03 - Cusomize Instructions**: Customize instructions with project structure, file desc + guidelines (CR, tests)
-- [ ] **04 - Build MCP**: Create a Superheroes MCP to better understand the Superhero data schema
-- [ ] **05 - Git Commit Messages**: Copilot can create git commit messages for us
-- [ ] **06 - Git MCP**: Create and list issues in GitHub using MCP (issue: update mcp code documentation)
-- [ ] **07 - Coding Agent**: assign issue directly from VS Code to Coding Agent to work in the background
-- [ ] **08 - QA Playwright Tests**: Generate frontend Playwrite tests (as AI TDD)
-- [ ] **09 - QA Playwright MCP + Chat Mode**: use Playwrite MCP to find more edge cases
-- [ ] **10 - BE - Refactor with Agent**: instead of one-shot refactors, break down to testable parts. First - move comparison logic to backend (AI TDD)
-- [ ] **10 - FE - Refactor with Agent**: Now modify FE logic to call API, keep UI as-is, run PW tests (AI TDD)
-- [ ] **11 - Prompts**: use task-specific prompt to review the APIs for Security issues
-- [ ] **12 - Code Review in VS Code**: review selection + review uncommited changes
-- [ ] **13 - Review & Refactor via Prompt**: works in all IDEs
-- [ ] **14 - Using Vision**: Using a screenshot for Design-to-Code
-- [ ] **15 - More Chat Modes**: Review several modes: Plan, Debug, 4.1-Beast
+- [ ] [01 Project Walkthrouhg](prompts/01-project-overview.md): Quick walkthrough of the project using Copilot + Running the FE/BE
+- [ ] [02 Instructions](prompts/02-generate-instructions.md): Generate copilot instructions for this project - using Copilot
+- [ ] [03 Prompts](prompts/11.1-api-security-review.prompt.md): use task-specific prompt to review the APIs for Security issues
+- [ ] 04 Chat Modes: Review several modes: Plan, Debug, 4.1-Beast
+- [ ] 05 Code Review in VS Code: review selection + review uncommited changes
+- [ ] [06 Review & Refactor via Prompt](prompts/13-review-and-refactor.prompt.md): works in all IDEs
+- [ ] [07 QA Playwright Tests](prompts/09-a-playwright-mcp-with-chatmode-vsc.md): Generate frontend Playwrite tests (as AI TDD)
+- [ ] [08 QA Playwright MCP + Chat Mode](prompts/09-b-playwright-mcp-reusable.prompt.md): use Playwrite MCP to add more edge cases
+- [ ] [09 Using Vision](prompts/14-vision-design-to-code.md): Using a screenshot for Design-to-Code
 - [ ] **Questions?**
 
 ---

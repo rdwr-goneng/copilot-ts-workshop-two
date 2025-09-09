@@ -1,6 +1,6 @@
 # Vision - Login Page Example
 
-# New Chat: GPT-4.1
+# New Chat: Sonnet 4
 
 Drag the image under /frontend/public/login-mockup.png to the chat
 
