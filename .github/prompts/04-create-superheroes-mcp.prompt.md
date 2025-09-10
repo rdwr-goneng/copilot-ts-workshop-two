@@ -2,7 +2,7 @@
 
 Create a TypeScript MCP (Model Context Protocol) server in index.ts that serves superhero data. The project uses ESM modules (type: "module" in package.json) and strict TypeScript compilation.
 
-Check MCP SDK API docs README, its intalled locally, under superheroes-mcp/node_modules/@modelcontextprotocol/sdk/README.md
+Check MCP SDK API docs README, its intalled locally, under mcp/node_modules/@modelcontextprotocol/sdk/README.md
 
 Key Requirements:
 
