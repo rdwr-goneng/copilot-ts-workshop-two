@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import Login from './Login';
+
 
 function App() {
   const [superheroes, setSuperheroes] = useState([]);
@@ -7,13 +9,17 @@ function App() {
   const [currentView, setCurrentView] = useState('table'); // 'table' or 'comparison'
   const [comparisonData, setComparisonData] = useState(null); // backend comparison response
   const [comparisonError, setComparisonError] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
 
   useEffect(() => {
-    fetch('/api/superheroes')
-      .then((response) => response.json())
-      .then((data) => setSuperheroes(data))
-      .catch((error) => console.error('Error fetching superheroes:', error));
-  }, []);
+    if (loggedIn) {
+      fetch('/api/superheroes')
+        .then((response) => response.json())
+        .then((data) => setSuperheroes(data))
+        .catch((error) => console.error('Error fetching superheroes:', error));
+    }
+  }, [loggedIn]);
 
   const handleHeroSelection = (hero) => {
     setSelectedHeroes(prev => {
@@ -208,6 +214,13 @@ function App() {
     </div>
   );
 
+  if (!loggedIn) {
+    return (
+      <div className="App">
+        <Login onLogin={() => setLoggedIn(true)} />
+      </div>
+    );
+  }
   return (
     <div className="App">
       <header className="App-header">

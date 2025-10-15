@@ -117,8 +117,10 @@ app.get('/api/superheroes/compare', async (req, res) => {
     }
 
     const categoryResults: CategoryResult[] = categoriesOrder.map((cat) => {
-      const v1 = Number(hero1.powerstats[cat]);
-      const v2 = Number(hero2.powerstats[cat]);
+      let v1 = Number(hero1.powerstats[cat]);
+      let v2 = Number(hero2.powerstats[cat]);
+      if (isNaN(v1)) v1 = 0;
+      if (isNaN(v2)) v2 = 0;
       let winner: number | 'tie';
       if (v1 > v2) winner = hero1.id;
       else if (v2 > v1) winner = hero2.id;
