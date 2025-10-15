@@ -10,6 +10,12 @@ export default defineConfig({
 	use: {
 		baseURL: 'http://localhost:3001',
 	},
+	webServer: {
+		command: 'npm start',
+		port: 3001,
+		reuseExistingServer: !process.env.CI,
+		timeout: 120 * 1000,
+	},
 	outputDir: 'test-results/',
 	testMatch: '**/tests/**/*.@(spec|test).@(ts|js)',
 	testIgnore: ['**/src/**', '**/*.test.js', '**/*.test.ts'],

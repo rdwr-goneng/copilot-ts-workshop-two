@@ -5,6 +5,8 @@ function App() {
   const [superheroes, setSuperheroes] = useState([]);
   const [selectedHeroes, setSelectedHeroes] = useState([]);
   const [currentView, setCurrentView] = useState('table'); // 'table' or 'comparison'
+  const [comparisonData, setComparisonData] = useState(null); // backend comparison response
+  const [comparisonError, setComparisonError] = useState(null);
 
   useEffect(() => {
     fetch('/api/superheroes')
@@ -34,7 +36,23 @@ function App() {
 
   const handleCompare = () => {
     if (selectedHeroes.length === 2) {
-      setCurrentView('comparison');
+      const [h1, h2] = selectedHeroes;
+      setComparisonError(null);
+      setComparisonData(null);
+      fetch(`/api/superheroes/compare?id1=${h1.id}&id2=${h2.id}`)
+        .then(r => {
+          if (!r.ok) throw new Error(`Compare request failed: ${r.status}`);
+          return r.json();
+        })
+        .then(data => {
+          setComparisonData(data);
+          setCurrentView('comparison');
+        })
+        .catch(err => {
+          console.error('Error fetching comparison:', err);
+            setComparisonError('Failed to fetch comparison');
+            setCurrentView('comparison');
+        });
     }
   };
 
@@ -43,34 +61,23 @@ function App() {
     setSelectedHeroes([]);
   };
 
-  const calculateWinner = (hero1, hero2) => {
-    const stats = ['intelligence', 'strength', 'speed', 'durability', 'power', 'combat'];
-    let hero1Score = 0;
-    let hero2Score = 0;
-    
-    stats.forEach(stat => {
-      if (hero1.powerstats[stat] > hero2.powerstats[stat]) {
-        hero1Score++;
-      } else if (hero2.powerstats[stat] > hero1.powerstats[stat]) {
-        hero2Score++;
-      }
-    });
-
-    if (hero1Score > hero2Score) {
-      return { winner: hero1, score: `${hero1Score}-${hero2Score}` };
-    } else if (hero2Score > hero1Score) {
-      return { winner: hero2, score: `${hero2Score}-${hero1Score}` };
-    } else {
-      return { winner: null, score: `${hero1Score}-${hero2Score}` };
-    }
+  // derive winner info from backend comparisonData
+  const deriveWinner = (hero1, hero2) => {
+    if (!comparisonData) return { winner: null, score: '' };
+    const hero1Wins = comparisonData.categories.filter(c => c.winner === hero1.id).length;
+    const hero2Wins = comparisonData.categories.filter(c => c.winner === hero2.id).length;
+    const score = `${hero1Wins}-${hero2Wins}`;
+    if (comparisonData.overall_winner === 'tie') return { winner: null, score };
+    const winnerHero = comparisonData.overall_winner === hero1.id ? hero1 : hero2;
+    return { winner: winnerHero, score };
   };
 
   const renderComparison = () => {
     if (selectedHeroes.length !== 2) return null;
     
     const [hero1, hero2] = selectedHeroes;
-    const result = calculateWinner(hero1, hero2);
-    const stats = ['intelligence', 'strength', 'speed', 'durability', 'power', 'combat'];
+  const result = deriveWinner(hero1, hero2);
+  const stats = ['intelligence', 'strength', 'speed', 'durability', 'power', 'combat'];
 
     return (
       <div className="comparison-view">
@@ -96,22 +103,20 @@ function App() {
         </div>
 
         <div className="stats-comparison">
-          {stats.map(stat => {
-            const stat1 = hero1.powerstats[stat];
-            const stat2 = hero2.powerstats[stat];
-            const winner = stat1 > stat2 ? 'hero1' : stat1 < stat2 ? 'hero2' : 'tie';
-            
+          {comparisonError && (
+            <div className="error-message">{comparisonError}</div>
+          )}
+          {!comparisonError && !comparisonData && (
+            <div className="loading-message">Loading comparison...</div>
+          )}
+          {!comparisonError && comparisonData && stats.map(stat => {
+            const cat = comparisonData.categories.find(c => c.name === stat);
+            const winner = cat.winner === 'tie' ? 'tie' : (cat.winner === hero1.id ? 'hero1' : 'hero2');
             return (
               <div key={stat} className="stat-row">
-                <div className={`stat-value ${winner === 'hero1' ? 'winner' : ''}`}>
-                  {stat1}
-                </div>
-                <div className="stat-name">
-                  {stat.charAt(0).toUpperCase() + stat.slice(1)}
-                </div>
-                <div className={`stat-value ${winner === 'hero2' ? 'winner' : ''}`}>
-                  {stat2}
-                </div>
+                <div className={`stat-value ${winner === 'hero1' ? 'winner' : ''}`}>{cat.id1_value}</div>
+                <div className="stat-name">{stat.charAt(0).toUpperCase() + stat.slice(1)}</div>
+                <div className={`stat-value ${winner === 'hero2' ? 'winner' : ''}`}>{cat.id2_value}</div>
               </div>
             );
           })}
@@ -119,7 +124,12 @@ function App() {
 
         <div className="final-result">
           <h2>Final Result</h2>
-          {result.winner ? (
+          {comparisonError ? (
+            <div className="tie-announcement">
+              <h3>⚠️ Comparison failed</h3>
+              <p>{comparisonError}</p>
+            </div>
+          ) : result.winner ? (
             <div className="winner-announcement">
               <h3>🏆 {result.winner.name} Wins!</h3>
               <p>Score: {result.score}</p>
